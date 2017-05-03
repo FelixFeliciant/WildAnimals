@@ -21,7 +21,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib. haha
+        // Do any additional setup after loading the view, typically from a nib.
      
         readJson()
         
@@ -224,36 +224,60 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "animalCell", for: indexPath) as! AnimalCell
         
-        cell.name.text = self.animals?[indexPath.item].caption
+
         
-        cell.info.text = self.animals?[indexPath.item].text
+        if !(self.animals?[indexPath.item].hasMultipleImages())! {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "animalCell", for: indexPath) as! AnimalCell
+            
+            cell.name.text = self.animals?[indexPath.item].caption
+            cell.info.text = self.animals?[indexPath.item].text
+            
+            cell.imgView.downloadImage(from: (self.animals?[indexPath.item].images?[0]["url"])!)
+            cell.imgView.accessibilityIdentifier = self.animals?[indexPath.item].images?[0]["name"]
+            cell.imgView?.isUserInteractionEnabled = true
+            cell.imgView?.tag = indexPath.row
+            
+            let tapped:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.TappedOnImage(sender:)))
+            
+            tapped.numberOfTapsRequired = 1
+            cell.imgView?.addGestureRecognizer(tapped)
+            
+            return cell
+
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "animalCellTwo", for: indexPath) as! AnimaCellTwo
+            
+            cell.name.text = self.animals?[indexPath.item].caption
+            cell.info.text = self.animals?[indexPath.item].text
+            
+            cell.imgViewLeft.downloadImage(from: (self.animals?[indexPath.item].images?[0]["url"])!)
+            cell.imgViewLeft.accessibilityIdentifier = self.animals?[indexPath.item].images?[0]["name"]
+            cell.imgViewLeft?.isUserInteractionEnabled = true
+            cell.imgViewLeft?.tag = indexPath.row
+            
+            cell.imgViewRight.downloadImage(from: (self.animals?[indexPath.item].images?[1]["url"])!)
+            cell.imgViewRight.accessibilityIdentifier = self.animals?[indexPath.item].images?[1]["name"]
+            cell.imgViewRight?.isUserInteractionEnabled = true
+            cell.imgViewRight?.tag = indexPath.row
+            
+            
+            
+            let tapped:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.TappedOnImage(sender:)))
+            
+            tapped.numberOfTapsRequired = 1
+            cell.imgViewLeft?.addGestureRecognizer(tapped)
+            cell.imgViewRight?.addGestureRecognizer(tapped)
+            return cell
+            
+            
+        }
         
-        cell.imgView.downloadImage(from: (self.animals?[indexPath.item].images?[0]["url"])!)
-        
-//        cell.imgView.image = UIImage(named: (self.animals?[indexPath.item].images?[0]["name"])!)
-        cell.imgView.accessibilityIdentifier = self.animals?[indexPath.item].images?[0]["name"]
-        
-        
-    
-        cell.imgView?.isUserInteractionEnabled = true
-        
-        cell.imgView?.tag = indexPath.row
-        
-        let tapped:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.TappedOnImage(sender:)))
-        
-        
-        tapped.numberOfTapsRequired = 1
-        cell.imgView?.addGestureRecognizer(tapped)
-        
-        return cell
     }
     
     
     
     func TappedOnImage(sender:UITapGestureRecognizer){
-//        print(sender.view?.tag)
         print("heelo")
         
     

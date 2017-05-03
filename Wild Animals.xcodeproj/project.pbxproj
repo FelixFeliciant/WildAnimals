@@ -15,6 +15,7 @@
 		11509FB51EB66417003BE930 /* AnimalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11509FB41EB66417003BE930 /* AnimalCell.swift */; };
 		11509FB71EB66587003BE930 /* Animal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11509FB61EB66587003BE930 /* Animal.swift */; };
 		115FE52D1EB8A9B4008B4EE1 /* animals.json in Resources */ = {isa = PBXBuildFile; fileRef = 115FE52C1EB8A9B4008B4EE1 /* animals.json */; };
+		1190C4A81EBA53CE00BB82D8 /* AnimaCellTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1190C4A71EBA53CE00BB82D8 /* AnimaCellTwo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		11509FB41EB66417003BE930 /* AnimalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimalCell.swift; sourceTree = "<group>"; };
 		11509FB61EB66587003BE930 /* Animal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animal.swift; sourceTree = "<group>"; };
 		115FE52C1EB8A9B4008B4EE1 /* animals.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = animals.json; path = ../animals.json; sourceTree = "<group>"; };
+		1190C4A71EBA53CE00BB82D8 /* AnimaCellTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimaCellTwo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				11509FAE1EB65BF0003BE930 /* Info.plist */,
 				11509FB41EB66417003BE930 /* AnimalCell.swift */,
 				11509FB61EB66587003BE930 /* Animal.swift */,
+				1190C4A71EBA53CE00BB82D8 /* AnimaCellTwo.swift */,
 			);
 			path = "Wild Animals";
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 				11509FB71EB66587003BE930 /* Animal.swift in Sources */,
 				11509FB51EB66417003BE930 /* AnimalCell.swift in Sources */,
 				11509FA31EB65BF0003BE930 /* AppDelegate.swift in Sources */,
+				1190C4A81EBA53CE00BB82D8 /* AnimaCellTwo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
