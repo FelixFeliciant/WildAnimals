@@ -42,6 +42,15 @@
             <PersistentString
                value = "data!">
             </PersistentString>
+            <PersistentString
+               value = "NSString(data: data!, encoding: String.Encoding.utf8.rawValue)">
+            </PersistentString>
+            <PersistentString
+               value = "urlRequest.allHTTPHeaderFields">
+            </PersistentString>
+            <PersistentString
+               value = "httpResponse">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
@@ -50,13 +59,8 @@
             <PersistentString
                value = "url">
             </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "UIImageView.downloadImage(from : String) -&gt; ():ViewController.swift">
-         <PersistentStrings>
             <PersistentString
-               value = "url">
+               value = "var s:String = data">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
