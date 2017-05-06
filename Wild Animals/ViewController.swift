@@ -142,24 +142,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
 
             cell.imgViewLeft.downloadImage(from: (self.animals?[indexPath.item].images?[0]["url"])!, name: (self.animals?[indexPath.item].images?[0]["name"])!)
-            
-            
             cell.imgViewLeft.accessibilityIdentifier = self.animals?[indexPath.item].images?[0]["name"]
             cell.imgViewLeft?.isUserInteractionEnabled = true
             cell.imgViewLeft?.tag = indexPath.row
+            
+            let tappedLeft:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.TappedOnImage(sender:)))
+            tappedLeft.numberOfTapsRequired = 1
+            cell.imgViewLeft?.addGestureRecognizer(tappedLeft)
+            
+            
             
             cell.imgViewRight.downloadImage(from: (self.animals?[indexPath.item].images?[1]["url"])!, name: (self.animals?[indexPath.item].images?[1]["name"])!)
             cell.imgViewRight.accessibilityIdentifier = self.animals?[indexPath.item].images?[1]["name"]
             cell.imgViewRight?.isUserInteractionEnabled = true
             cell.imgViewRight?.tag = indexPath.row
             
-            
-            
-            let tapped:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.TappedOnImage(sender:)))
-            
-            tapped.numberOfTapsRequired = 1
-            cell.imgViewLeft?.addGestureRecognizer(tapped)
-            cell.imgViewRight?.addGestureRecognizer(tapped)
+            let tappedRight:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.TappedOnImage(sender:)))
+            tappedRight.numberOfTapsRequired = 1
+            cell.imgViewRight?.addGestureRecognizer(tappedRight)
             return cell
             
             
