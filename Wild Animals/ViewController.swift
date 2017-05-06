@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
+    @IBOutlet weak var navigationBar: UINavigationBar!
     
     @IBOutlet weak var tableView: UITableView!
     var animals: [Animal]? = []
@@ -37,22 +38,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     if (object["title"] as? String) != nil {
                         
                     }
-                    var isAnimal: Bool
+                    //var isAnimal: Bool
                     
                     //parse the paragrapphs which is an array
                     if let paragraphs = object["paragraphs"] as? [[String: AnyObject]] {
                         
                         for paragraph in paragraphs {
                             
-                            isAnimal = true
+                            //isAnimal = true
                             
                             let caption  = paragraph["caption"]
                             let text  = paragraph["text"]
                             if let images = paragraph["images"] as? [[String:AnyObject]] {
                                 
-                                if images.count == 0 {
-                                    isAnimal = false
-                                }
+                                //if images.count == 0 {
+                                //    isAnimal = false
+                               // }
+                                
                                 
                                 var imageObjects = [[String:String]]()
                                 
@@ -69,13 +71,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                     
                                 }
                                 
-                                if isAnimal == true {
-                                    let animal = Animal()
-                                    animal.caption = caption as! String?
-                                    animal.text = text as! String?
-                                    animal.images = imageObjects
-                                    self.animals?.append(animal)
-                                }
+                                let animal = Animal()
+                                animal.caption = caption as! String?
+                                animal.text = text as! String?
+                                animal.images = imageObjects
+                                self.animals?.append(animal)
                             }
                             
                         }
@@ -110,9 +110,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        //intro
         
-        
-        if !(self.animals?[indexPath.item].hasMultipleImages())! {
+        if (self.animals?[indexPath.item].images?.count == 0) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "introCell", for: indexPath) as! IntroCell
+            cell.name.text = self.animals?[indexPath.item].caption
+            cell.info.text = self.animals?[indexPath.item].text
+            return cell
+            
+        } else if (self.animals?[indexPath.item].images?.count)! == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "animalCell", for: indexPath) as! AnimalCell
             
             cell.name.text = self.animals?[indexPath.item].caption
@@ -121,8 +127,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.imgView.downloadImage(from: (self.animals?[indexPath.item].images?[0]["url"])!, name: (self.animals?[indexPath.item].images?[0]["name"])!)
             cell.imgView.accessibilityIdentifier = self.animals?[indexPath.item].images?[0]["name"]
             cell.imgView?.isUserInteractionEnabled = true
-            //cell.imgView?.setValue(indexPath.item, forKeyPath: "animalIndex")
-            //cell.imgView?.setValue(0, forKeyPath: "animalImageIndex")
             cell.imgView?.tag = indexPath.row
             
             let tapped:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tappedOnImage(sender: )))
@@ -132,6 +136,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             return cell
             
+            
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "animalCellTwo", for: indexPath) as! AnimaCellTwo
             
@@ -139,7 +144,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.info.text = self.animals?[indexPath.item].text
             
             
-
+            
             cell.imgViewLeft.downloadImage(from: (self.animals?[indexPath.item].images?[0]["url"])!, name: (self.animals?[indexPath.item].images?[0]["name"])!)
             cell.imgViewLeft.accessibilityIdentifier = self.animals?[indexPath.item].images?[0]["name"]
             cell.imgViewLeft?.isUserInteractionEnabled = true
@@ -160,12 +165,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             tappedRight.numberOfTapsRequired = 1
             cell.imgViewRight?.addGestureRecognizer(tappedRight)
             return cell
-            
-            
         }
-        
     }
-    
+
+
     
     
     func tappedOnImage(sender:UITapGestureRecognizer){

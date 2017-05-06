@@ -23,6 +23,9 @@
                value = "self.animals?[indexPath.item].images?[0][&quot;url&quot;]!">
             </PersistentString>
             <PersistentString
+               value = "self.animals?[indexPath.item].images.count">
+            </PersistentString>
+            <PersistentString
                value = "!(self.animals?[indexPath.item].hasMultipleImages())">
             </PersistentString>
          </PersistentStrings>
@@ -91,6 +94,12 @@
                value = "var s:String = data">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.tappedOnImage(sender : UITapGestureRecognizer) -&gt; ():ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:ViewController.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
