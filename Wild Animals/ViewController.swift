@@ -20,13 +20,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        readJson()
+        readAndSerializeJson()
         
     }
     
     
     
-    private func readJson() {
+    
+    
+    
+    private func readAndSerializeJson() {
         do {
             
             self.animals = [Animal]()
@@ -36,7 +39,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 if let object = json as? [String: Any] {
                     //parse title:
                     if (object["title"] as? String) != nil {
-                        
+                        navigationBar.topItem?.title = object["title"] as! String?
                     }
                     //var isAnimal: Bool
                     
