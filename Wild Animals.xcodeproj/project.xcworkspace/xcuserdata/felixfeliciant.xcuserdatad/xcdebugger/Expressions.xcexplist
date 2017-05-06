@@ -54,6 +54,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "UIImageView.(downloadImage(from : String, name : String) -&gt; ()).(closure #1).(closure #1):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "imageCache">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "UIImageView.(downloadImage(from : String) -&gt; ()).(closure #1).(closure #1):ViewController.swift">
          <PersistentStrings>
             <PersistentString

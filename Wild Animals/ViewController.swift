@@ -14,8 +14,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var tableView: UITableView!
     
-    
-    
     var animals: [Animal]? = []
     
     
@@ -23,7 +21,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        
         readJson()
+        
     }
     
     
@@ -121,7 +121,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.name.text = self.animals?[indexPath.item].caption
             cell.info.text = self.animals?[indexPath.item].text
             
-            cell.imgView.downloadImage(from: (self.animals?[indexPath.item].images?[0]["url"])!)
+            cell.imgView.downloadImage(from: (self.animals?[indexPath.item].images?[0]["url"])!, name: (self.animals?[indexPath.item].images?[0]["name"])!)
             cell.imgView.accessibilityIdentifier = self.animals?[indexPath.item].images?[0]["name"]
             cell.imgView?.isUserInteractionEnabled = true
             cell.imgView?.tag = indexPath.row
@@ -139,12 +139,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.name.text = self.animals?[indexPath.item].caption
             cell.info.text = self.animals?[indexPath.item].text
             
-            cell.imgViewLeft.downloadImage(from: (self.animals?[indexPath.item].images?[0]["url"])!)
+            
+
+            cell.imgViewLeft.downloadImage(from: (self.animals?[indexPath.item].images?[0]["url"])!, name: (self.animals?[indexPath.item].images?[0]["name"])!)
+            
+            
             cell.imgViewLeft.accessibilityIdentifier = self.animals?[indexPath.item].images?[0]["name"]
             cell.imgViewLeft?.isUserInteractionEnabled = true
             cell.imgViewLeft?.tag = indexPath.row
             
-            cell.imgViewRight.downloadImage(from: (self.animals?[indexPath.item].images?[1]["url"])!)
+            cell.imgViewRight.downloadImage(from: (self.animals?[indexPath.item].images?[1]["url"])!, name: (self.animals?[indexPath.item].images?[1]["name"])!)
             cell.imgViewRight.accessibilityIdentifier = self.animals?[indexPath.item].images?[1]["name"]
             cell.imgViewRight?.isUserInteractionEnabled = true
             cell.imgViewRight?.tag = indexPath.row
@@ -187,55 +191,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 }
 
+
+let imageCache = NSCache<AnyObject, AnyObject>()
 extension UIImageView {
-    
-    func downloadImage(from imageUrl: String) {
-        
-        
-        
-        //            let urlRequest = URLRequest(url: (URL(string: imageUrl.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!)!))
+    func downloadImage(from imageUrl: String, name imageName: String) {
         
         var urlRequest:URLRequest
-        
         let percentCharacter: Character = "%"
-        
         if imageUrl.characters.contains(percentCharacter) {
             urlRequest = URLRequest(url: URL(string: imageUrl)!)
-            print("before:\n \(imageUrl)\n")
-            print("urlRequestString is:\n \(urlRequest)\n")
-            print("************************************\n")
         } else {
-            
-             urlRequest = URLRequest(url: (URL(string: imageUrl.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!)!))
-            print("before:\n \(imageUrl)\n")
-            print("urlRequestString is:\n \(urlRequest)\n")
-            print("************************************\n")
+            urlRequest = URLRequest(url: (URL(string: imageUrl.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!)!))
         }
         
-
-        
-
-        
-        
-        
-        
-        
-        
-        
-        
-        //            imageUrl.addingPercentEncoding( withAllowedCharacters: .urlQueryAllowed)
-        //            urlRequest = urlRequest.replacingOccurrences(of: "%25", with: "", options: .literal, range: nil)
-        
-        
-        
-
+        if let imageFromCache = imageCache.object(forKey: imageName as AnyObject) as? UIImage {
+            print("cached image: \(imageName)")
+            self.image = imageFromCache
+            return
+        }
         
         
         let task = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            
-            //                print(urlRequest)
-            
-            
             if error != nil {
                 print(error!)
                 return
@@ -248,6 +224,9 @@ extension UIImageView {
             
             if (statusCode == 200) {
                 DispatchQueue.main.async {
+                    print("downloading image: \(imageName)")
+                    let imageToCache = UIImage(data: data!)
+                    imageCache.setObject(imageToCache!, forKey: imageName as AnyObject)
                     self.image = UIImage(data: data!)!
                     
                     
