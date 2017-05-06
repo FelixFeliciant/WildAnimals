@@ -13,14 +13,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     @IBOutlet weak var tableView: UITableView!
-    
     var animals: [Animal]? = []
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
         
         readJson()
         
@@ -124,9 +121,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.imgView.downloadImage(from: (self.animals?[indexPath.item].images?[0]["url"])!, name: (self.animals?[indexPath.item].images?[0]["name"])!)
             cell.imgView.accessibilityIdentifier = self.animals?[indexPath.item].images?[0]["name"]
             cell.imgView?.isUserInteractionEnabled = true
+            //cell.imgView?.setValue(indexPath.item, forKeyPath: "animalIndex")
+            //cell.imgView?.setValue(0, forKeyPath: "animalImageIndex")
             cell.imgView?.tag = indexPath.row
             
-            let tapped:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.TappedOnImage(sender:)))
+            let tapped:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tappedOnImage(sender: )))
             
             tapped.numberOfTapsRequired = 1
             cell.imgView?.addGestureRecognizer(tapped)
@@ -146,7 +145,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.imgViewLeft?.isUserInteractionEnabled = true
             cell.imgViewLeft?.tag = indexPath.row
             
-            let tappedLeft:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.TappedOnImage(sender:)))
+            let tappedLeft:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tappedOnImage(sender:)))
             tappedLeft.numberOfTapsRequired = 1
             cell.imgViewLeft?.addGestureRecognizer(tappedLeft)
             
@@ -157,7 +156,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.imgViewRight?.isUserInteractionEnabled = true
             cell.imgViewRight?.tag = indexPath.row
             
-            let tappedRight:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.TappedOnImage(sender:)))
+            let tappedRight:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tappedOnImage(sender:)))
             tappedRight.numberOfTapsRequired = 1
             cell.imgViewRight?.addGestureRecognizer(tappedRight)
             return cell
@@ -169,8 +168,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     
-    func TappedOnImage(sender:UITapGestureRecognizer){
-        print("heelo")
+    func tappedOnImage(sender:UITapGestureRecognizer){
+        let tappedImageName:String = (sender.view?.accessibilityIdentifier)!
+        let animalIndx:Int =  (sender.view?.tag)!
+        var animalExplanation:String?
+        if self.animals?[animalIndx].images?[0]["name"] == tappedImageName {
+            animalExplanation = self.animals?[animalIndx].images?[0]["explanation"]
+        } else if self.animals?[animalIndx].images?[1]["name"] == tappedImageName{
+            animalExplanation = self.animals?[animalIndx].images?[1]["explanation"]
+        }
+        
+        let alert = UIAlertController(title: tappedImageName, message: animalExplanation, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Go back", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
         
     }
     
@@ -224,12 +234,10 @@ extension UIImageView {
             
             if (statusCode == 200) {
                 DispatchQueue.main.async {
-                    print("downloading image: \(imageName)")
+                    //print("downloading image: \(imageName)")
                     let imageToCache = UIImage(data: data!)
                     imageCache.setObject(imageToCache!, forKey: imageName as AnyObject)
-                    self.image = UIImage(data: data!)!
-                    
-                    
+                    self.image = imageToCache
                 }
             }
             
@@ -246,7 +254,7 @@ extension UIImageView {
 
 
 
-
+//TODO: TALK TO GDO
 
 
 

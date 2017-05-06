@@ -3,10 +3,18 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "GLOBAL">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.animals[0].images[0][&quot;explanation&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "ViewController.tableView(UITableView, cellForRowAt : IndexPath) -&gt; UITableViewCell:ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "!(self.animals?[indexPath.item].hasMultipleImages())">
+               value = "self.animals?[indexPath.item].hasMultipleImages()!">
             </PersistentString>
             <PersistentString
                value = "self.animals?[indexPath.item].text">
@@ -15,7 +23,7 @@
                value = "self.animals?[indexPath.item].images?[0][&quot;url&quot;]!">
             </PersistentString>
             <PersistentString
-               value = "self.animals?[indexPath.item].hasMultipleImages()!">
+               value = "!(self.animals?[indexPath.item].hasMultipleImages())">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -29,7 +37,16 @@
          contextName = "ViewController.TappedOnImage(sender : UITapGestureRecognizer) -&gt; ():ViewController.swift">
          <PersistentStrings>
             <PersistentString
+               value = "sender.view?.tag">
+            </PersistentString>
+            <PersistentString
+               value = "sender">
+            </PersistentString>
+            <PersistentString
                value = "sender.view?.accessibilityIdentifier">
+            </PersistentString>
+            <PersistentString
+               value = "sender.locationInView(self.tableView)">
             </PersistentString>
             <PersistentString
                value = "sender.view!.tag">
@@ -58,6 +75,9 @@
          <PersistentStrings>
             <PersistentString
                value = "imageCache">
+            </PersistentString>
+            <PersistentString
+               value = "self.contentMode">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
